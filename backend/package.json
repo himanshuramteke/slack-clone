@@ -5,19 +5,21 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "npx nodemon src/index.js",
-    "start": "node src/index.js"
+    "dev": "set NODE_OPTIONS=--import ./instrument.mjs && npx nodemon src/index.js",
+    "start": "set NODE_OPTIONS=--import ./instrument.mjs && node src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@clerk/express": "^1.7.24",
+    "@sentry/node": "^10.6.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "inngest": "^3.40.1",
-    "mongoose": "^8.18.0"
+    "mongoose": "^8.18.0",
+    "stream-chat": "^9.17.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
