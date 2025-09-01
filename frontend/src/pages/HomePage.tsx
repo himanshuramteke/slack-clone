@@ -6,22 +6,25 @@ import PageLoader from "../components/PageLoader";
 import {
   Chat,
   Channel,
+  ChannelList,
   MessageList,
   MessageInput,
   Thread,
   Window,
 } from "stream-chat-react";
 import "../styles/stream-chat-theme.css";
-import { PlusIcon } from "lucide-react";
+import { HashIcon, PlusIcon, UsersIcon } from "lucide-react";
 import CreateChannelModal from "../components/CreateChannelModal";
-import type { Channel as StreamChannel } from "stream-chat";
+import type { Channel as StreamChatChannel } from "stream-chat";
+import CustomChannelPreview from "../components/CustomChannelPreview";
+import UsersList from "../components/UserList";
 
 const HomePage: React.FC = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false);
-  const [activeChannel, setActiveChannel] = useState<StreamChannel | null>(
+  const [activeChannel, setActiveChannel] = useState<StreamChatChannel | null>(
     null
   );
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { chatClient, error, isLoading } = useStreamChat();
 
   // set active channel from URL params
@@ -68,7 +71,59 @@ const HomePage: React.FC = () => {
                     <span>Create Channel</span>
                   </button>
                 </div>
+
                 {/* CHANNEL LIST */}
+                <ChannelList
+                  filters={{
+                    members: {
+                      $in: chatClient?.user?.id ? [chatClient.user.id] : [],
+                    },
+                  }}
+                  options={{ state: true, watch: true }}
+                  Preview={({ channel }) => (
+                    <CustomChannelPreview
+                      channel={channel}
+                      activeChannel={activeChannel}
+                      setActiveChannel={(channel: StreamChatChannel) => {
+                        setActiveChannel(channel);
+                        setSearchParams({ channel: channel.id || "" });
+                      }}
+                    />
+                  )}
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  List={({ children, loading, error }: any) => (
+                    <div className="channel-sections">
+                      <div className="section-header">
+                        <div className="section-title">
+                          <HashIcon className="size-4" />
+                          <span>Channels</span>
+                        </div>
+                      </div>
+
+                      {/* todos: add better components here instead of just a simple text  */}
+                      {loading && (
+                        <div className="loading-message">
+                          Loading channels...
+                        </div>
+                      )}
+                      {error && (
+                        <div className="error-message">
+                          Error loading channels
+                        </div>
+                      )}
+
+                      <div className="channels-list">{children}</div>
+
+                      <div className="section-header direct-messages">
+                        <div className="section-title">
+                          <UsersIcon className="size-4" />
+                          <span>Direct Messages</span>
+                        </div>
+                      </div>
+                      <UsersList activeChannel={activeChannel} />
+                    </div>
+                  )}
+                />
               </div>
             </div>
           </div>
