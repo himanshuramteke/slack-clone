@@ -18,6 +18,7 @@ import CreateChannelModal from "../components/CreateChannelModal";
 import type { Channel as StreamChatChannel } from "stream-chat";
 import CustomChannelPreview from "../components/CustomChannelPreview";
 import UsersList from "../components/UserList";
+import CustomChannelHeader from "../components/CustomChannelHeader";
 
 const HomePage: React.FC = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false);
@@ -131,7 +132,7 @@ const HomePage: React.FC = () => {
           <div className="chat-main">
             <Channel channel={activeChannel ?? undefined}>
               <Window>
-                {/* <CustomChannelHeader /> */}
+                <CustomChannelHeader />
                 <MessageList />
                 <MessageInput />
               </Window>

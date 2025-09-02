@@ -19,7 +19,7 @@ const CustomChannelPreview: React.FC<CustomChannelPreviewProps> = ({
   if (isDM) return null;
 
   // Get unread count from Stream Chat channel
-  const unreadCount = channel.state?.unreadCount || 0;
+  const unreadCount = channel.countUnread();
 
   return (
     <button

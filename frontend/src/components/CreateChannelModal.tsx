@@ -59,15 +59,6 @@ const CreateChannelModal: React.FC<CreateChannelModalProps> = ({ onClose }) => {
     fetchUsers();
   }, [client]);
 
-  // reset the form on open
-  useEffect(() => {
-    setChannelName("");
-    setDescription("");
-    setChannelType("public");
-    setError("");
-    setSelectedMembers([]);
-  }, []);
-
   // auto-select all users for public channels
   useEffect(() => {
     if (channelType === "public") setSelectedMembers(users.map((u) => u.id));
