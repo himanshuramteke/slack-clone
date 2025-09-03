@@ -19,8 +19,10 @@ const UsersList: React.FC<UsersListProps> = ({ activeChannel }) => {
     if (!client?.user) return [];
 
     const response = await client.queryUsers({}, { name: 1 }, { limit: 20 });
-    // Filter out the current user from the results
-    return response.users.filter((user) => user.id !== client.user!.id);
+    // Filter out the current user and users with IDs starting with "recording-"
+    return response.users.filter(
+      (user) => user.id !== client.user!.id && !user.id.startsWith("recording-")
+    );
   }, [client]);
 
   const {
