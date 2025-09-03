@@ -6,6 +6,8 @@ export const MONGODB_URI = process.env.MONGODB_URI;
 
 export const NODE_ENV = process.env.NODE_ENV;
 
+export const FRONTEND_URL = process.env.FRONTEND_URL;
+
 export const CLERK_PUBLISHABLE_KEY = process.env.CLERK_PUBLISHABLE_KEY;
 
 export const CLERK_SECRET_KEY = process.env.CLERK_SECRET_KEY;

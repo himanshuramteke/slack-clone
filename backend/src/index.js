@@ -1,6 +1,6 @@
 import "../instrument.mjs";
 import express from "express";
-import { NODE_ENV, PORT } from "./config/serverConfig.js";
+import { FRONTEND_URL, NODE_ENV, PORT } from "./config/serverConfig.js";
 import { connectDB } from "./config/db.js";
 import { clerkMiddleware } from "@clerk/express";
 import { functions, inngest } from "./config/inngest.js";
@@ -16,7 +16,7 @@ app.get("/debug-sentry", (req, res) => {
 });
 
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 app.use(clerkMiddleware());
 
 app.use("/api/inngest", serve({ client: inngest, functions }));
